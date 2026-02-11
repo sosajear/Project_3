@@ -18,6 +18,8 @@ void delay_ms(int t);
 #define BLUE_LED GPIO_NUM_10
 #define BUZZER GPIO_NUM_11
 
+#define HEAD_1 GPIO_NUM_13
+#define HEAD_2 GPIO_NUM_14
 
 #define ADC_CHANNEL_1   ADC1_CHANNEL_0  // GPIO1
 #define ADC_CHANNEL_2   ADC1_CHANNEL_1  // GPIO2
@@ -25,7 +27,6 @@ void delay_ms(int t);
 
 
 esp_adc_cal_characteristics_t adc_chars;
-
 uint32_t v1(){ 
         uint32_t raw1 = adc1_get_raw(ADC_CHANNEL_1);
         uint32_t voltage1 = esp_adc_cal_raw_to_voltage(raw1, &adc_chars);
@@ -45,7 +46,10 @@ uint32_t v2(){
         return voltage2;
 }
 
-
+void head(bool on){
+    gpio_set_level(HEAD_1,on);
+    gpio_set_level(HEAD_2,on);
+}
 
 void app_main(void)
 {
@@ -72,6 +76,19 @@ void app_main(void)
    gpio_reset_pin(IGNITION_BUTTON);
    gpio_set_direction(IGNITION_BUTTON, GPIO_MODE_INPUT);
 
+    gpio_reset_pin(HEAD_1);
+    gpio_set_direction(HEAD_1, GPIO_MODE_OUTPUT);
+    gpio_pullup_en(HEAD_1);
+
+    gpio_reset_pin(HEAD_2);
+    gpio_set_direction(HEAD_2, GPIO_MODE_OUTPUT);
+    gpio_pullup_en(HEAD_2);
+
+    bool DAY, ON, OFF, AUTO;
+    DAY = 1;
+    ON = 0;
+    OFF = 1;
+    AUTO = 0;
     //switching = 0;
     // Setup ADC
     adc1_config_width(ADC_WIDTH_BIT_12);
@@ -175,7 +192,7 @@ void app_main(void)
         if(ON && engine_running){
             head(1);
         }
-        if(OFF && engine_running){       
+        if(OFF && engine_running){        
             head(0);
         }
         if(AUTO && engine_running){

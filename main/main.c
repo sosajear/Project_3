@@ -1,12 +1,24 @@
 #include <stdio.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "driver/ledc.h"
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
 #include "driver/gpio.h"
 
 //Delay function declaration
 void delay_ms(int t);
+
+#define LEDC_TIMER              LEDC_TIMER_0
+#define LEDC_MODE               LEDC_LOW_SPEED_MODE
+#define LEDC_OUTPUT_IO         (5)
+#define LEDC_CHANNEL            LEDC_CHANNEL_0
+#define LEDC_DUTY_RES           LEDC_TIMER_13_BIT
+
+#define LEDC_FREQUENCY          (50) // Frequency in Hertz. 
+#define LEDC_DUTY_MIN           (307) // Set duty to 3.75%.
+#define LEDC_DUTY_STOP          (614) // Set duty to 7.5%
+#define LEDC_DUTY_MAX           (921) // Set duty to 11.25%.
 
 #define D_WEIGHT_BUTTON GPIO_NUM_4 //Button for Driver Weight Sensor
 #define D_SEATBELT_BUTTON GPIO_NUM_6 //Button for Driver Seatbelt Sensor
@@ -50,6 +62,8 @@ void head(bool on){
     gpio_set_level(HEAD_1,on);
     gpio_set_level(HEAD_2,on);
 }
+
+static void ledc_init(void);
 
 void app_main(void)
 {
@@ -98,7 +112,7 @@ void app_main(void)
     // Calibration
     esp_adc_cal_characterize(ADC_UNIT_1, ADC_ATTEN, ADC_WIDTH_BIT_12, 1100, &adc_chars);
     
-   
+    ledc_init();
    //variables to keep track of the green light and the ignition
    bool green_led_ready = true;
    bool green_led_on = false;
@@ -219,4 +233,29 @@ void app_main(void)
 void delay_ms(int t)
 {
    vTaskDelay(t / portTICK_PERIOD_MS);
+}
+
+static void ledc_init(void)
+{
+    // Prepare and then apply the LEDC PWM timer configuration
+    ledc_timer_config_t ledc_timer = {
+        .speed_mode       = LEDC_MODE,
+        .duty_resolution  = LEDC_DUTY_RES,
+        .timer_num        = LEDC_TIMER,
+        .freq_hz          = LEDC_FREQUENCY,  // Set output frequency at 50 Hz
+        .clk_cfg          = LEDC_AUTO_CLK
+    };
+    ESP_ERROR_CHECK(ledc_timer_config(&ledc_timer));
+
+    // Prepare and then apply the LEDC PWM channel configuration
+    ledc_channel_config_t ledc_channel = {
+        .speed_mode     = LEDC_MODE,
+        .channel        = LEDC_CHANNEL,
+        .timer_sel      = LEDC_TIMER,
+        .intr_type      = LEDC_INTR_DISABLE,
+        .gpio_num       = LEDC_OUTPUT_IO,
+        .duty           = 0, // Set duty to 0%
+        .hpoint         = 0
+    };
+ledc_channel_config(&ledc_channel);
 }

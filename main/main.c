@@ -8,6 +8,8 @@
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
 #include "driver/gpio.h"
+#include "driver/ledc.h"
+
 
 //Delay function declaration
 void delay_ms(int t);
@@ -40,7 +42,7 @@ void delay_ms(int t);
 #define ADC_CHANNEL_2   ADC1_CHANNEL_1  // GPIO2
 #define ADC_ATTEN       ADC_ATTEN_DB_11
 
-
+static volatile bool engine_off = 0;
 static volatile int intermittent_delay = 1;
 TaskHandle_t high_handle = NULL;
 TaskHandle_t low_handle = NULL;
@@ -57,7 +59,7 @@ uint32_t v1(){
         uint32_t voltage1 = esp_adc_cal_raw_to_voltage(raw1, &adc_chars);
         
         // Display results
-        printf("GPIO1: %lumV\n", voltage1);
+        //printf("GPIO1: %lumV\n", voltage1);
         return voltage1;
 }
 uint32_t v2(){ 
@@ -120,7 +122,7 @@ void app_main(void)
    gpio_reset_pin(IGNITION_BUTTON);
    gpio_set_direction(IGNITION_BUTTON, GPIO_MODE_INPUT);
 
-    ledc_init(void);
+    ledc_init();
     bool HI, LO, INTT, OFF;
     HI = 0;
     LO = 0;
@@ -225,38 +227,13 @@ void app_main(void)
            ignition_pressed = false;
        }
 
-       
-        uint32_t mode = v2();
-        uint32_t light = v1();
-
-        if(0 <= mode && mode < 1100 ){ON = 0; OFF = 1, AUTO = 0;}
-        if(1100 <= mode && mode < 2200 ){ON = 0; OFF = 0, AUTO = 1;}
-        if(2200 <= mode && mode < 3300 ){ON = 1; OFF = 0, AUTO = 0;}
-        if(0 <= light && light < 1300 ){DAY = 0;}
-        if(1900 <= light && light < 3300 ){DAY = 1;}
-        if(ON && engine_running){
-            head(1);
-        }
-        if(OFF && engine_running){        
-            head(0);
-        }
-        if(AUTO && engine_running){
-            if(DAY){
-        
-        delay_ms(2000);
-        head(0);
-            }
-            if(!DAY){
-        delay_ms(1000);
-        head(1);
-            }
-        }
-
         if(!engine_running){     
             hd44780_clear(&lcd);
+            engine_off = true;
         }
         delay_ms(20);
         if(engine_running){
+            engine_off = false;
             uint32_t mode = v1();
             if(0    <= mode && mode < 825 ){OFF = 1, LO = 0, HI = 0, INTT = 0; lcd_print("OFF");}
             if(825  <= mode && mode < 1650)
@@ -276,26 +253,33 @@ void app_main(void)
             }
             if(2475 <= mode && mode < 3300 ){
                 OFF = 0, LO = 0, HI = 1, INTT = 0; 
-                lcd_print("HIGH");
+                lcd_print("HI ");
                 if(low_handle == NULL && high_handle == NULL && int_handle == NULL){
                     xTaskCreate(high_wiper, "HIGH_WIPER", 2048, NULL, 5, &high_handle);
                 }
             }
             uint32_t spd = v2();
-            if(0    <= spd && spd < 1100 ){intermittent_delay = 1}
-            if(1100 <= spd && spd < 2200 ){intermittent_delay = 3}
-            if(2200 <= spd && spd < 3300 ){intermittent_delay = 5}
+            if(0    <= spd && spd < 1100 ){intermittent_delay = 1;}
+            if(1100 <= spd && spd < 2200 ){intermittent_delay = 3;}
+            if(2200 <= spd && spd < 3300 ){intermittent_delay = 5;}
         }
     }
 }
 
 void reg_wiper(){
     for(float i = LEDC_DUTY_MIN; i < LEDC_DUTY_MAX; i = i + 4.093){
+        if(engine_off){
+            break;
+        }
         ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
         ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
         delay_ms(20);
     }
+
     for(float i = LEDC_DUTY_MAX; i > LEDC_DUTY_MIN; i = i - 4.093){
+        if(engine_off){
+            break;
+        }
         ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
         ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
         delay_ms(20);
@@ -317,11 +301,19 @@ void high_wiper(void *pvParameters)
         ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
         ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
         delay_ms(20);
+        if(engine_off){
+            high_handle = NULL;
+            vTaskDelete(high_handle);
+        }
     }
     for(float i = LEDC_DUTY_MAX; i > LEDC_DUTY_MIN; i = i - 10.233){
         ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
         ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
         delay_ms(20);
+        if(engine_off){
+            high_handle = NULL;
+            vTaskDelete(high_handle);
+        }
     }
     high_handle = NULL;
     vTaskDelete(high_handle);
@@ -330,7 +322,9 @@ void high_wiper(void *pvParameters)
 
 void intermittent_wiper(void *pvParameters){
     reg_wiper();
-    delay_ms(intermittent_delay*1000);
+    if(!engine_off){
+        delay_ms(intermittent_delay*1000);
+    }
     int_handle = NULL;
     vTaskDelete(int_handle);
 }

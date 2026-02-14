@@ -1,0 +1,473 @@
+Open On-Chip Debugger v0.12.0-esp32-20250707 (2025-07-06-17:44)
+Licensed under GNU GPL v2
+For bug reports, read
+	http://openocd.org/doc/doxygen/bugs.html
+Info : esp_usb_jtag: VID set to 0x303a and PID to 0x1001
+Info : esp_usb_jtag: capabilities descriptor set to 0x2000
+Info : Listening on port 6666 for tcl connections
+Info : Listening on port 4444 for telnet connections
+Info : esp_usb_jtag: serial (DC:B4:D9:05:28:C0)
+Info : esp_usb_jtag: Device found. Base speed 40000KHz, div range 1 to 255
+Info : clock speed 40000 kHz
+Info : JTAG tap: esp32s3.tap0 tap/device found: 0x120034e5 (mfg: 0x272 (Tensilica), part: 0x2003, ver: 0x1)
+Info : JTAG tap: esp32s3.tap1 tap/device found: 0x120034e5 (mfg: 0x272 (Tensilica), part: 0x2003, ver: 0x1)
+Info : [esp32s3.cpu0] Examination succeed
+Info : [esp32s3.cpu1] Examination succeed
+Info : [esp32s3.cpu0] starting gdb server on 3333
+Info : Listening on port 3333 for gdb connections
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Info : esp_usb_jtag: serial (DC:B4:D9:05:28:C0)
+Info : esp_usb_jtag: Device found. Base speed 40000KHz, div range 1 to 255
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu0] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu0] Polling failed, trying to reexamine
+Info : [esp32s3.cpu0] Examination succeed
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (1) - (Power on reset)
+Info : [esp32s3.cpu0] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (1) - (Power on reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x40048DFE, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x4004883B, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x4004883B, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x40041A76, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x40048D1A, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x403CD9EE, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x40048836, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Target halted, PC=0x4037AB31, debug_reason=00000001
+Info : Set GDB target to 'esp32s3.cpu0'
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Error: libusb_bulk_write error: LIBUSB_ERROR_PIPE
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu0] Failed to read debug stubs address location (-104)!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Info : esp_usb_jtag: serial (DC:B4:D9:05:28:C0)
+Info : esp_usb_jtag: Device found. Base speed 40000KHz, div range 1 to 255
+Error: missing data from bitq interface
+Error: [esp32s3.cpu1] Polling failed, trying to reexamine
+Info : [esp32s3.cpu1] Examination succeed
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x40041A76, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (1) - (Power on reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (1) - (Power on reset)
+Info : [esp32s3.cpu0] Target halted, PC=0x4037AB31, debug_reason=00000001
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x40048DF6, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x4004883B, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x40041A7C, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x403CD9FF, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x40378CFD, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x4004883B, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x4004883B, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x40048DE8, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x403CD9F2, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x40048C2B, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x400490D7, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x403CD7E6, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x4004883B, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x40048D00, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x4004883B, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x40048836, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x400490D7, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x403CD7E6, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu0] Debug controller was reset.
+Info : [esp32s3.cpu0] Core was reset.
+Info : [esp32s3.cpu1] Debug controller was reset.
+Info : [esp32s3.cpu1] Core was reset.
+Info : [esp32s3.cpu0] Target halted, PC=0x40056F5C, debug_reason=00000000
+Info : [esp32s3.cpu0] Reset cause (21) - (USB UART reset)
+Info : [esp32s3.cpu1] Target halted, PC=0x403778F6, debug_reason=00000000
+Info : [esp32s3.cpu1] Reset cause (21) - (USB UART reset)
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu0] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu0] Polling failed, trying to reexamine
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Warn : [esp32s3.cpu0] Unexpected OCD_ID = 0b339fd2
+Error: [esp32s3.cpu0] Examination failed
+Error: [esp32s3.cpu0] Examination failed, GDB will be halted. Polling again in 100ms
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu1] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu1] Polling failed, trying to reexamine
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Warn : [esp32s3.cpu1] Unexpected OCD_ID = 0b339fd2
+Error: [esp32s3.cpu1] Examination failed
+Error: [esp32s3.cpu1] Examination failed, GDB will be halted. Polling again in 100ms
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu0] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu0] Polling failed, trying to reexamine
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Warn : [esp32s3.cpu0] Unexpected OCD_ID = 0b339fd2
+Error: [esp32s3.cpu0] Examination failed
+Error: [esp32s3.cpu0] Examination failed, GDB will be halted. Polling again in 300ms
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu1] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu1] Polling failed, trying to reexamine
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Warn : [esp32s3.cpu1] Unexpected OCD_ID = 0b339fd2
+Error: [esp32s3.cpu1] Examination failed
+Error: [esp32s3.cpu1] Examination failed, GDB will be halted. Polling again in 300ms
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu0] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu0] Polling failed, trying to reexamine
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Warn : [esp32s3.cpu0] Unexpected OCD_ID = 0b339fd2
+Error: [esp32s3.cpu0] Examination failed
+Error: [esp32s3.cpu0] Examination failed, GDB will be halted. Polling again in 700ms
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu1] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu1] Polling failed, trying to reexamine
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Warn : [esp32s3.cpu1] Unexpected OCD_ID = 0b339fd2
+Error: [esp32s3.cpu1] Examination failed
+Error: [esp32s3.cpu1] Examination failed, GDB will be halted. Polling again in 700ms
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu0] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu0] Polling failed, trying to reexamine
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Warn : [esp32s3.cpu0] Unexpected OCD_ID = 0b339fd2
+Error: [esp32s3.cpu0] Examination failed
+Error: [esp32s3.cpu0] Examination failed, GDB will be halted. Polling again in 1500ms
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu1] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu1] Polling failed, trying to reexamine
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Warn : [esp32s3.cpu1] Unexpected OCD_ID = 0b339fd2
+Error: [esp32s3.cpu1] Examination failed
+Error: [esp32s3.cpu1] Examination failed, GDB will be halted. Polling again in 1500ms
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu0] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu0] Polling failed, trying to reexamine
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Warn : [esp32s3.cpu0] Unexpected OCD_ID = 0b339fd2
+Error: [esp32s3.cpu0] Examination failed
+Error: [esp32s3.cpu0] Examination failed, GDB will be halted. Polling again in 3100ms
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu1] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu1] Polling failed, trying to reexamine
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Warn : [esp32s3.cpu1] Unexpected OCD_ID = 0b339fd2
+Error: [esp32s3.cpu1] Examination failed
+Error: [esp32s3.cpu1] Examination failed, GDB will be halted. Polling again in 3100ms
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: missing data from bitq interface
+Error: Failed to exec JTAG queue!
+Error: [esp32s3.cpu0] Failed to read debug stubs address location (-104)!
+Error: [esp32s3.cpu0] Polling failed, trying to reexamine
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO
+Error: esp_usb_jtag: device not found!
+Error: esp_usb_jtag: failed to revive USB device!
+Error: libusb_bulk_write error: LIBUSB_ERROR_IO

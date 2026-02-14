@@ -5,7 +5,6 @@
 #include <esp_idf_lib_helpers.h>
 #include <inttypes.h>
 #include <stdio.h>
-
 #include "driver/adc.h"
 #include "esp_adc_cal.h"
 #include "driver/gpio.h"
@@ -16,6 +15,16 @@ void delay_ms(int t);
 #define ADC_CHANNEL_1   ADC1_CHANNEL_0  // GPIO1
 #define ADC_CHANNEL_2   ADC1_CHANNEL_1  // GPIO2
 #define ADC_ATTEN       ADC_ATTEN_DB_11
+
+#define LEDC_TIMER              LEDC_TIMER_0
+#define LEDC_MODE               LEDC_LOW_SPEED_MODE
+#define LEDC_OUTPUT_IO          (16)
+#define LEDC_CHANNEL            LEDC_CHANNEL_0
+#define LEDC_DUTY_RES           LEDC_TIMER_13_BIT
+
+#define LEDC_FREQUENCY          (50) // Frequency in Hertz.
+#define LEDC_DUTY_MIN           (307) // Set duty to 3.75%.
+#define LEDC_DUTY_MAX           (614) // Set duty to 7.5%
 
 #define D_WEIGHT_BUTTON GPIO_NUM_4 //Button for Driver Weight Sensor
 #define D_SEATBELT_BUTTON GPIO_NUM_6 //Button for Driver Seatbelt Sensor
@@ -31,6 +40,16 @@ void delay_ms(int t);
 #define ADC_CHANNEL_2   ADC1_CHANNEL_1  // GPIO2
 #define ADC_ATTEN       ADC_ATTEN_DB_11
 
+
+static volatile int intermittent_delay = 1;
+TaskHandle_t high_handle = NULL;
+TaskHandle_t low_handle = NULL;
+TaskHandle_t int_handle = NULL;
+
+void low_wiper(void *pvParameter);
+void high_wiper(void *pvParameter);
+void intermittent_wiper(void *pvParameter);
+static void ledc_init(void);
 
 esp_adc_cal_characteristics_t adc_chars;
 uint32_t v1(){ 
@@ -101,7 +120,7 @@ void app_main(void)
    gpio_reset_pin(IGNITION_BUTTON);
    gpio_set_direction(IGNITION_BUTTON, GPIO_MODE_INPUT);
 
-
+    ledc_init(void);
     bool HI, LO, INTT, OFF;
     HI = 0;
     LO = 0;
@@ -234,23 +253,117 @@ void app_main(void)
         }
 
         if(!engine_running){     
-            head(0);
+            hd44780_clear(&lcd);
         }
         delay_ms(20);
-uint32_t mode = v1();
-        if(0    <= mode && mode < 825 ){OFF = 1, LO = 0, HI = 0, INTT = 0; lcd_print("OFF");}
-        if(825  <= mode && mode < 1650 ){OFF = 0, LO = 1, HI = 0, INTT = 0; lcd_print("LOW");}
-        if(1650 <= mode && mode < 2475 ){OFF = 0, LO = 0, HI = 1, INTT = 0; lcd_print("HI ");}
-        if(2475 <= mode && mode < 3300 ){OFF = 0, LO = 0, HI = 0, INTT = 1; lcd_print("INT");}
-uint32_t spd = v2();
-        if(0    <= spd && spd < 1100 ){SHORT = 1, MED = 0, LONG = 0;}
-        if(1100 <= spd && spd < 2200 ){SHORT = 0, MED = 1, LONG = 0;}
-        if(2200 <= spd && spd < 3300 ){SHORT = 0, MED = 0, LONG = 1;}
-   }
+        if(engine_running){
+            uint32_t mode = v1();
+            if(0    <= mode && mode < 825 ){OFF = 1, LO = 0, HI = 0, INTT = 0; lcd_print("OFF");}
+            if(825  <= mode && mode < 1650)
+            {
+                OFF = 0, LO = 0, HI = 0, INTT = 1; 
+                lcd_print("INT");
+                if(low_handle == NULL && high_handle == NULL && int_handle == NULL){
+                    xTaskCreate(intermittent_wiper, "INTERMITTENT_WIPER", 2048, NULL, 5, &int_handle);
+                }
+            }
+            if(1650 <= mode && mode < 2475 ){
+                OFF = 0, LO = 1, HI = 0, INTT = 0; 
+                lcd_print("LOW");
+                if(low_handle == NULL && high_handle == NULL && int_handle == NULL){
+                    xTaskCreate(low_wiper, "low_WIPER", 2048, NULL, 5, &low_handle);
+                }
+            }
+            if(2475 <= mode && mode < 3300 ){
+                OFF = 0, LO = 0, HI = 1, INTT = 0; 
+                lcd_print("HIGH");
+                if(low_handle == NULL && high_handle == NULL && int_handle == NULL){
+                    xTaskCreate(high_wiper, "HIGH_WIPER", 2048, NULL, 5, &high_handle);
+                }
+            }
+            uint32_t spd = v2();
+            if(0    <= spd && spd < 1100 ){intermittent_delay = 1}
+            if(1100 <= spd && spd < 2200 ){intermittent_delay = 3}
+            if(2200 <= spd && spd < 3300 ){intermittent_delay = 5}
+        }
+    }
 }
+
+void reg_wiper(){
+    for(float i = LEDC_DUTY_MIN; i < LEDC_DUTY_MAX; i = i + 4.093){
+        ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
+        ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+        delay_ms(20);
+    }
+    for(float i = LEDC_DUTY_MAX; i > LEDC_DUTY_MIN; i = i - 4.093){
+        ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
+        ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+        delay_ms(20);
+    }
+}
+
+
+void low_wiper(void *pvParameters)
+{
+    reg_wiper();
+    low_handle = NULL;
+    vTaskDelete(low_handle);
+}
+
+
+void high_wiper(void *pvParameters)
+{
+    for(float i = LEDC_DUTY_MIN; i < LEDC_DUTY_MAX; i = i + 10.233){
+        ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
+        ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+        delay_ms(20);
+    }
+    for(float i = LEDC_DUTY_MAX; i > LEDC_DUTY_MIN; i = i - 10.233){
+        ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
+        ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+        delay_ms(20);
+    }
+    high_handle = NULL;
+    vTaskDelete(high_handle);
+}
+
+
+void intermittent_wiper(void *pvParameters){
+    reg_wiper();
+    delay_ms(intermittent_delay*1000);
+    int_handle = NULL;
+    vTaskDelete(int_handle);
+}
+
 
 //A function to specify delays in milliseconds
 void delay_ms(int t)
 {
    vTaskDelay(t / portTICK_PERIOD_MS);
+}
+
+static void ledc_init(void)
+{
+    // Prepare and then apply the LEDC PWM timer configuration
+    ledc_timer_config_t ledc_timer = {
+        .speed_mode       = LEDC_MODE,
+        .duty_resolution  = LEDC_DUTY_RES,
+        .timer_num        = LEDC_TIMER,
+        .freq_hz          = LEDC_FREQUENCY,  // Set output frequency at 50 Hz
+        .clk_cfg          = LEDC_AUTO_CLK
+    };
+    ESP_ERROR_CHECK(ledc_timer_config(&ledc_timer));
+
+
+    // Prepare and then apply the LEDC PWM channel configuration
+    ledc_channel_config_t ledc_channel = {
+        .speed_mode     = LEDC_MODE,
+        .channel        = LEDC_CHANNEL,
+        .timer_sel      = LEDC_TIMER,
+        .intr_type      = LEDC_INTR_DISABLE,
+        .gpio_num       = LEDC_OUTPUT_IO,
+        .duty           = 0, // Set duty to 0%
+        .hpoint         = 0
+    };
+ledc_channel_config(&ledc_channel);
 }

@@ -8,9 +8,15 @@
 
 //Delay function declaration
 void delay_ms(int t);
-void low_wiper();
-void high_wiper();
-void intermittent_wiper(int delay);
+void low_wiper(void *pvParameter);
+void high_wiper(void *pvParameter);
+void intermittent_wiper(void *pvParameter);
+
+TaskHandle_t high_handle = NULL; //task handles to remove errors
+TaskHandle_t low_handle = NULL;
+TaskHandle_t int_handle = NULL;
+
+static volatile int intermittent_delay = 1;
 
 #define LEDC_TIMER              LEDC_TIMER_0
 #define LEDC_MODE               LEDC_LOW_SPEED_MODE
@@ -27,7 +33,7 @@ void intermittent_wiper(int delay);
 #define D_SEATBELT_BUTTON GPIO_NUM_6 //Button for Driver Seatbelt Sensor
 #define P_WEIGHT_BUTTON GPIO_NUM_5 //Button for Passenger Weight Sensor
 #define P_SEATBELT_BUTTON GPIO_NUM_7 //Button for Passenger Seatbelt Sensor
-#define IGNITION_BUTTON GPIO_NUM_12
+#define IGNITION_BUTTON GPIO_NUM_12 
 
 #define GREEN_LED GPIO_NUM_9
 #define BLUE_LED GPIO_NUM_10
@@ -100,6 +106,9 @@ void app_main(void)
     gpio_reset_pin(HEAD_2);
     gpio_set_direction(HEAD_2, GPIO_MODE_OUTPUT);
     gpio_pullup_en(HEAD_2);
+
+
+
 
     bool DAY, ON, OFF, AUTO;
     DAY = 1;
@@ -254,6 +263,7 @@ void low_wiper(void *pvParameters)
 {
     while(1){
         reg_wiper();
+        vTaskDelete(NULL);
     }
 }
 
@@ -270,13 +280,15 @@ void high_wiper(void *pvParameters)
             ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
             delay_ms(20);
         }
+        vTaskDelete(NULL);
     }
 }
 
-void intermittent_wiper(int delay, void *pvParameters){
+void intermittent_wiper(void *pvParameters){
     while(1){
         reg_wiper();
-        delay_ms(delay*1000);
+        delay_ms(intermittent_delay*1000);
+        vTaskDelete();
     }
 }
 

@@ -8,17 +8,20 @@
 
 //Delay function declaration
 void delay_ms(int t);
+void low_wiper();
+void high_wiper();
+void intermittent_wiper(int delay);
 
 #define LEDC_TIMER              LEDC_TIMER_0
 #define LEDC_MODE               LEDC_LOW_SPEED_MODE
-#define LEDC_OUTPUT_IO         (5)
+#define LEDC_OUTPUT_IO          (16)
 #define LEDC_CHANNEL            LEDC_CHANNEL_0
 #define LEDC_DUTY_RES           LEDC_TIMER_13_BIT
 
 #define LEDC_FREQUENCY          (50) // Frequency in Hertz. 
 #define LEDC_DUTY_MIN           (307) // Set duty to 3.75%.
-#define LEDC_DUTY_STOP          (614) // Set duty to 7.5%
-#define LEDC_DUTY_MAX           (921) // Set duty to 11.25%.
+#define LEDC_DUTY_MAX           (614) // Set duty to 7.5%
+
 
 #define D_WEIGHT_BUTTON GPIO_NUM_4 //Button for Driver Weight Sensor
 #define D_SEATBELT_BUTTON GPIO_NUM_6 //Button for Driver Seatbelt Sensor
@@ -189,10 +192,10 @@ void app_main(void)
            }
        }
 
-       if (gpio_get_level(IGNITION_BUTTON)) //reset ignition button latch
-       {
-           ignition_pressed = false;
-       }
+        if (gpio_get_level(IGNITION_BUTTON)) //reset ignition button latch
+        {
+            ignition_pressed = false;
+        }
 
        
         uint32_t mode = v2();
@@ -235,6 +238,48 @@ void delay_ms(int t)
    vTaskDelay(t / portTICK_PERIOD_MS);
 }
 
+void reg_wiper(){
+    for(float i = LEDC_DUTY_MIN; i < LEDC_DUTY_MAX; i = i + 4.093){
+        ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
+        ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+        delay_ms(20);
+    }
+    for(float i = LEDC_DUTY_MAX; i > LEDC_DUTY_MIN; i = i - 4.093){
+        ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
+        ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+        delay_ms(20);
+    }
+}
+void low_wiper(void *pvParameters)
+{
+    while(1){
+        reg_wiper();
+    }
+}
+
+void high_wiper(void *pvParameters)
+{
+    while(1){
+        for(float i = LEDC_DUTY_MIN; i < LEDC_DUTY_MAX; i = i + 10.233){
+            ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
+            ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+            delay_ms(20);
+        }
+        for(float i = LEDC_DUTY_MAX; i > LEDC_DUTY_MIN; i = i - 10.233){
+            ledc_set_duty(LEDC_MODE, LEDC_CHANNEL, i);
+            ledc_update_duty(LEDC_MODE, LEDC_CHANNEL);
+            delay_ms(20);
+        }
+    }
+}
+
+void intermittent_wiper(int delay, void *pvParameters){
+    while(1){
+        reg_wiper();
+        delay_ms(delay*1000);
+    }
+}
+
 static void ledc_init(void)
 {
     // Prepare and then apply the LEDC PWM timer configuration
@@ -259,3 +304,4 @@ static void ledc_init(void)
     };
 ledc_channel_config(&ledc_channel);
 }
+
